@@ -21,6 +21,9 @@ const path = require("path");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+//require handlebars for partials
+const hbs = require('hbs')
+
 // Middleware configuration
 module.exports = (app) => {
   // In development environment the app logs
@@ -35,6 +38,10 @@ module.exports = (app) => {
   app.set("views", path.join(__dirname, "..", "views"));
   // Sets the view engine to handlebars
   app.set("view engine", "hbs");
+
+  // register hbs partials
+  hbs.registerPartials("views/partials")
+
   // Handles access to the public folder
   app.use(express.static(path.join(__dirname, "..", "public")));
 

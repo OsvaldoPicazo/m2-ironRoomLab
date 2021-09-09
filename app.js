@@ -31,6 +31,7 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 const authRoutes = require('./routes/auth-routes');
 app.use('/auth', authRoutes);
 
+// middleware applied to all the private routes
 const privateRoutes = require('./routes/private-routes');
 app.use('/private', isLoggedIn, privateRoutes);
 

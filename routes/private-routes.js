@@ -3,15 +3,14 @@ const router = express.Router();
 
 const Room = require('./../models/Room.model');
 
-router.get('/profile', (req, res) => {
-	res.render('private/profile', { user: req.session.currentUser });
-});
+// import library that allows us to upload files
+const fileUploader = require("../config/cloudinary")
 
 router.get('/rooms/add', (req, res) => {
 	res.render('rooms/new-room');
 });
 
-router.post('/rooms/add', (req, res) => {
+router.post('/rooms/add', fileUploader.single('imageUrl'), (req, res) => {
 
 	//Get the user id from the session
 	const userId = req.session.currentUser._id;
@@ -35,6 +34,10 @@ router.post('/rooms/add', (req, res) => {
 	})
 	.catch((error) => {console.log(error)})
 
+});
+
+router.get('/profile', (req, res) => {
+	res.render('private/profile', { user: req.session.currentUser });
 });
 
 module.exports = router;
